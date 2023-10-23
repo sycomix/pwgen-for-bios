@@ -68,7 +68,7 @@ def remove_old(bucket, new_files):
     for s3_object in bucket.objects.all():
         if s3_object.key not in new_files_set:
             removed_files.append(s3_object.key)
-            print("Marked for remove: {}".format(s3_object.key))
+            print(f"Marked for remove: {s3_object.key}")
 
     # TODO: check errors
     bucket.delete_objects(Delete={
@@ -86,7 +86,7 @@ def update_site(deploy_dir, bucket_name, delete=False):
     for file_name in updated_files:
         file_path = os.path.join(deploy_dir, file_name)
         extra = file_options(file_name)
-        print("Uploading: {}".format(file_name))
+        print(f"Uploading: {file_name}")
         bucket.upload_file(file_path, file_name, extra)
 
     if delete:
